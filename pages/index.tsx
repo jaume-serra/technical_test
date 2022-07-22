@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+const Home: NextPage = ( allBooks ) => {
   return (
 
 
@@ -14,45 +14,33 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+      <main className="flex flex-col h-screen py-20">
+        <h1 className=" mx-auto font-bold  text-4xl text-[#0070f3]">
+              Llistat de llibres
         </h1>
+        <section className='w-8/12 mx-auto'>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+         
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-10 border-gray-200 border-2 border-r-4 p-4'>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+            { allBooks.data.map((book) => (
+                <div className='flex flex-col bg-gray-200 gap-y-2' key={book.id}>
+                  <div className='w-64 h-64 bg-gray-400'>Image</div>
+                  <h2 className='text-blue-500 text-2xl'>{book.title}</h2>
+                  <h3 className='text-xl'>{book.author}</h3>
+                  <p>{book.description}</p>
+                  <p>{book.price}</p>
+                </div>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            ))}
+            
+          </div>
+        
+          
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+         
+        </section>   
       </main>
 
       <footer className={styles.footer}>
@@ -61,7 +49,6 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
@@ -72,3 +59,14 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getStaticProps() {
+  
+  const response = await fetch('http://localhost:3000/api/list_all')
+  const data = await response.json()
+  console.log(data);
+  return {
+    props: { data }
+  }
+
+}
