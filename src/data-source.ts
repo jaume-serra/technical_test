@@ -18,6 +18,12 @@ export const AppDataSource = new DataSource({
 
 
 export async function initDB() {
-    await AppDataSource.initialize()
-    return AppDataSource
+    try{
+        await AppDataSource.initialize()
+        return AppDataSource
+
+    }catch(error){
+
+        return AppDataSource
+    }
 }
