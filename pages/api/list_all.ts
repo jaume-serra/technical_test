@@ -1,22 +1,24 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import "reflect-metadata"
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { AppDataSource, initDB } from "../../src/data-source"
+import { Book } from "../../src/entity/Book"
 
-type Data = {
-  id: string,
-  title: string,
-  author: string,
-  price: number,
-  description: string
+type BookType = {
+  
 }
 
-export default function handler(
+
+
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Array<Data>>
+  res: NextApiResponse<any>
 ) {
-  const result = [
-    { id: '123123', title: 'Conte 1', author: 'Jaume Serra',price: 10, description: 'Hola que tal' },
-    { id: '123125', title: 'Conte 2', author: 'Jaume Serra',price: 10, description: 'Be, i tu' },
-    { id: '123126', title: 'Conte 3', author: 'Jaume Serra',price: 10, description: 'Be, tmb' }
-  ]
-  res.status(200).json(result)
+  const conn = await initDB()
+
+  const bookRepo = conn.getRepository(Book)
+  const allBooks = await bookRepo.find()
+  console.log(allBooks);
+
+
+  res.status(200).json(allBooks)
 }
