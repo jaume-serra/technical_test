@@ -3,8 +3,42 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Icon } from '@iconify/react';
 import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import loading from "../../public/loading.gif"
+
+
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
+
 
 const EditBook: NextPage = ( allBooks ) => {
+
+  const { register,handleSubmit, formState:{isSubmitting} } = useForm()
+  
+
+
+
+  const submitForm = async (formData) => {
+    await delay(1000)
+    const data = {
+      id: formData.id,
+      title: formData.title,
+      author: formData.title,
+      description: formData.description,
+      price: formData.price,
+    }
+    const JSONdata = JSON.stringify(data)
+    const endpoint = `/api/book?id=${formData.id}`
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json',},
+      body: JSONdata,
+    }
+    const res = await fetch(endpoint, options)
+    console.log("form submitted");
+  }
   return (
     <div  style={{  
       backgroundImage: "url(/bg.png)",
@@ -32,27 +66,43 @@ const EditBook: NextPage = ( allBooks ) => {
 
           <div className='grid grid-cols-1  gap-6 my-10 bg-white p-6 rounded-lg '>
 
-            
-            <div className='flex flex-col bg-gray-200 gap-y-2 rounded-lg transition ease-in-out hover:scale-105'>
-              <div className='w-full h-64 bg-gray-400 rounded-t-lg'>Image</div>
-              <div id="bookInfo" className='grid gap-y-2 px-4 py-2 text-xl '>
-                <div className='flex place-content-between text-amber-800'>
-                  <h2 className='text-amber-800'>{allBooks.data.title}</h2>
-                  <Icon icon="akar-icons:edit" className='h-8 w-8  transition ease-in-out hover:scale-110 hover:cursor-pointer' />
+            <form onSubmit={ handleSubmit(submitForm) }>
+              <div className='flex flex-col bg-gray-200  pb-5 gap-y-2 rounded-lg '>
+                <div className='w-full h-64  rounded-t-lg'>
+                  <img  className='w-full h-full' src="/llibre3.jpeg" />
                 </div>
-                <h3 className='text-xl'>Autor: {allBooks.data.author}</h3>
-                <p>Descripció: {allBooks.data.description}</p>
-                <p>Preu: {allBooks.data.price} €</p>
+                <div id="bookInfo" className='grid gap-y-2 px-4 py-2 text-xl '>
+                  <input type="text" className='hidden' id='id' name='id' defaultValue={allBooks.data.id} />
+                  <label htmlFor="title" >Títol</label>
+                  <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks.data.title} {...register("title", {required: true})} />
+                  <label htmlFor="author" >Autor</label>
+                  <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks.data.author} {...register("author", {required: true})} />
+                  <label htmlFor="description" >Descripció</label>
+                  <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks.data.description} {...register("description", {required: true})} />
+                  <label htmlFor="price" >Preu</label>
+                  <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks.data.price} {...register("price", {required: true})} />
+                  <div className='flex gap-x-6'>
+                    <button className="flex w-36  my-5 px-4 py-2  bg-white text-xl gap-4 items-center rounded-2xl hover:bg-green-500 hover:text-white  transition ease-in-out hover:scale-110 hover:cursor-pointer" disabled={isSubmitting} type='submit'>
+                      {isSubmitting ? <div className='flex gap-4 px-2'>
+                        Loading... 
+                        <img className= 'bg-blue-900' src={loading} alt="" />
+                        </div> : "Submit"}
+                      <Icon icon="bi:save" />
+
+                    </button>
+                      
+                    <div className=' w-36 my-5 px-4 py-2 bg-white text-xl  rounded-2xl hover:bg-amber-800 hover:text-white   transition ease-in-out hover:scale-110 hover:cursor-pointer'>
+                     <a className='flex gap-4 items-center' href={`/#`}>
+                      <button>Tornar</button>
+                      <Icon icon="akar-icons:arrow-back" />
+                     </a>
+                    </div>
+                  </div>
+                 
+                </div>
               </div>
-            </div>
-
-          
-            
+            </form>            
           </div>
-        
-          
-
-         
         </section>   
       </main>
 

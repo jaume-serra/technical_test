@@ -10,10 +10,30 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const conn = await initDB()
-  const bookRepo = conn.getRepository(Book)
-  const query = parseInt(req.query['id'][0]);
-  const oneBook = await bookRepo.findOneBy({id: query})
-  console.log(oneBook);
-  res.status(200).json(oneBook)
+  if(req.method === 'GET'){
+      const conn = await initDB()
+      const bookRepo = conn.getRepository(Book)
+      const query = parseInt(req.query['id'][0]);
+      const oneBook = await bookRepo.findOneBy({id: query})
+      res.status(200).json(oneBook)
+  }
+  if(req.method === 'POST'){
+    const conn = await initDB()
+    const bookRepo = conn.getRepository(Book)
+    
+
+    const {id,title, author,description, price} = req.body
+    bookRepo.createQueryBuilder().update({
+      title,
+      author,
+      description,
+      price
+    })
+    .where({
+      id
+    })
+    .returning('*')
+    .execute()
+    res.status(200).json({'msg':true})
+  }
 }
