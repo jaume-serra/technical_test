@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Icon } from '@iconify/react';
 import Link from 'next/link'
-import Image from 'next/image';
 import { useForm } from 'react-hook-form'
 import { useState } from 'react';
 
@@ -75,7 +74,7 @@ const EditBook: NextPage = ( allBooks ) => {
             <form onSubmit={ handleSubmit(submitForm) }>
               <div className='flex flex-col bg-gray-100  pb-5 gap-y-2 rounded-xl shadow-xl '>
                 <div className='w-full h-64  rounded-t-lg'>
-                  <Image  className='w-full h-full rounded-t-xl' src="/llibre3.jpeg" />
+                  <img  className='w-full h-full rounded-t-xl' src="/llibre3.jpeg" />
                 </div>
                 <div id="bookInfo" className='grid gap-y-2 px-4 py-2 text-xl '>
                   <input type="text" className='hidden'  defaultValue={allBooks['data'].id} {...register("id", {required: true})} />
