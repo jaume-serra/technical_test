@@ -20,9 +20,8 @@ export default async function handler(
   if(req.method === 'POST'){
     const conn = await initDB()
     const bookRepo = conn.getRepository(Book)
-    
-
     const {id,title, author,description, price} = req.body
+    
     bookRepo.createQueryBuilder().update({
       title,
       author,
