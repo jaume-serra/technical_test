@@ -4,8 +4,6 @@ import { initDB } from "../../src/data-source"
 import { Book } from "../../src/entity/Book"
 
 
-
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>

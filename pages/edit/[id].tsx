@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Icon } from '@iconify/react';
 import Link from 'next/link'
+import Image from 'next/image';
 import { useForm } from 'react-hook-form'
 import { useState } from 'react';
 
@@ -74,19 +75,19 @@ const EditBook: NextPage = ( allBooks ) => {
             <form onSubmit={ handleSubmit(submitForm) }>
               <div className='flex flex-col bg-gray-100  pb-5 gap-y-2 rounded-xl shadow-xl '>
                 <div className='w-full h-64  rounded-t-lg'>
-                  <img  className='w-full h-full rounded-t-xl' src="/llibre3.jpeg" />
+                  <Image  className='w-full h-full rounded-t-xl' src="/llibre3.jpeg" />
                 </div>
                 <div id="bookInfo" className='grid gap-y-2 px-4 py-2 text-xl '>
-                  <input type="text" className='hidden'  defaultValue={allBooks.data.id} {...register("id", {required: true})} />
+                  <input type="text" className='hidden'  defaultValue={allBooks['data'].id} {...register("id", {required: true})} />
                   <label htmlFor="title" >Títol</label>
-                  <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks.data.title} {...register("title", {required: true})} />
+                  <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks['data'].title} {...register("title", {required: true})} />
                   <label htmlFor="author" >Autor</label>
-                  <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks.data.author} {...register("author", {required: true})} />
+                  <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks['data'].author} {...register("author", {required: true})} />
                   <label htmlFor="description" >Descripció</label>
-                  <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks.data.description} {...register("description", {required: true})} />
+                  <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks['data'].description} {...register("description", {required: true})} />
                   <label htmlFor="price" >Preu</label>
-                  <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks.data.price} {...register("price", {required: true})} />
-                  { submit && <p className='text-sm text-green-700'>Els canvis s'han guardat correctament</p>  }
+                  <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks['data'].price} {...register("price", {required: true})} />
+                  { submit && <p className='text-sm text-green-700'>Els canvis s&aposhan guardat correctament</p>  }
                   <div className='flex gap-x-6 my-5 mx-auto'>
                     <button className="flex w-36  my-5 px-4 py-2 shadow-xl hover:shadow-3xl bg-white text-xl gap-4 items-center rounded-2xl hover:bg-green-500 hover:text-white  transition ease-in-out hover:scale-105 hover:cursor-pointer" disabled={isSubmitting} onClick={()=>setSubmit(true)} type='submit'>
                       {isSubmitting ? <div className='flex gap-4 px-2'>

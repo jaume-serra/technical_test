@@ -38,8 +38,8 @@ const Home: NextPage = ( allBooks ) => {
             </Link>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6  bg-white p-6 rounded-lg '>
-            {allBooks.data.length == 0 && <p> No hi ha cap llibre disponible</p>}
-            {allBooks.data.length > 0 && allBooks.data.map((book) => (
+            {allBooks['data'].length == 0 && <p> No hi ha cap llibre disponible</p>}
+            {allBooks['data'].length > 0 && allBooks['data'].map((book) => (
                 <div className='flex flex-col bg-gray-100  shadow-xl gap-y-2 rounded-lg transition ease-in-out hover:scale-105' key={book.id}>
                   <div className='w-full h-64 bg-gray-400 rounded-t-lg'>Image</div>
                   <div id="bookInfo" className='grid gap-y-2 px-4 py-2 text-xl '>
@@ -66,7 +66,7 @@ const Home: NextPage = ( allBooks ) => {
 
 export default Home
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   
   const response = await fetch('http://localhost:3000/api/list_all', {
     method: 'GET',
@@ -78,5 +78,4 @@ export async function getStaticProps() {
   return {
     props: { data }
   }
-
 }
