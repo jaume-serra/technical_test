@@ -9,7 +9,7 @@ const Home: NextPage = ( allBooks ) => {
 
 
     <div style={{
-      height:"100%",
+      height:"200vh",
       backgroundImage: "url(/bg.png)",
       backgroundPosition: 'center',
       backgroundSize: 'cover',
@@ -34,12 +34,12 @@ const Home: NextPage = ( allBooks ) => {
               Vols afegir més llibres?     
             </p>
             <Link href={`/create`}>
-              <Icon className='h-10 w-10 bg-gray-100 m-2 p-2 rounded-full transition ease-in-out hover:scale-110 shadow-xl hover:text-white hover:bg-green-700' icon="carbon:add-alt" />
+              <Icon className='h-10 w-10 bg-gray-100 m-2 p-2 rounded-full transition ease-in-out hover:scale-110 shadow-xl hover:text-white hover:bg-green-700 hover:cursor-pointer' icon="carbon:add-alt" />
             </Link>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6  bg-white p-6 rounded-lg '>
-
-            { allBooks.data.map((book) => (
+            {allBooks.data.length == 0 && <p> No hi ha cap llibre disponible</p>}
+            {allBooks.data.length > 0 && allBooks.data.map((book) => (
                 <div className='flex flex-col bg-gray-100  shadow-xl gap-y-2 rounded-lg transition ease-in-out hover:scale-105' key={book.id}>
                   <div className='w-full h-64 bg-gray-400 rounded-t-lg'>Image</div>
                   <div id="bookInfo" className='grid gap-y-2 px-4 py-2 text-xl '>

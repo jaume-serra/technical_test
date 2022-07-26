@@ -1,10 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import { Icon } from '@iconify/react';
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
-import loading from "../../public/loading.gif"
 import { useState } from 'react';
 
 
@@ -88,6 +86,7 @@ const EditBook: NextPage = ( allBooks ) => {
                   <input type="text" className='w-11/12 rounded-xl p-2'  defaultValue={allBooks.data.description} {...register("description", {required: true})} />
                   <label htmlFor="price" >Preu</label>
                   <input type="text" className='w-11/12 rounded-xl p-2' defaultValue={allBooks.data.price} {...register("price", {required: true})} />
+                  { submit && <p className='text-sm text-green-700'>Els canvis s'han guardat correctament</p>  }
                   <div className='flex gap-x-6 my-5 mx-auto'>
                     <button className="flex w-36  my-5 px-4 py-2 shadow-xl hover:shadow-3xl bg-white text-xl gap-4 items-center rounded-2xl hover:bg-green-500 hover:text-white  transition ease-in-out hover:scale-105 hover:cursor-pointer" disabled={isSubmitting} onClick={()=>setSubmit(true)} type='submit'>
                       {isSubmitting ? <div className='flex gap-4 px-2'>
@@ -106,7 +105,6 @@ const EditBook: NextPage = ( allBooks ) => {
 
                     </div>
                   </div>
-                  { submit && <p className='text-sm text-green-700'>Els canvis s'han guardat correctament</p>  }
 
                  
                 </div>
